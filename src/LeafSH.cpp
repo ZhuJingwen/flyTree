@@ -10,7 +10,7 @@
 // ----------------------------------
 void LeafSH::initialize(float x, float y)
 {
-    radius = ofRandom(10,30);
+    radius = ofRandom(15,30);
     
     born = ofGetElapsedTimef();
     pos.set(x,y);

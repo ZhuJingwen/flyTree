@@ -10,7 +10,7 @@
 // ----------------------------------
 void LeafNY::initialize(float x, float y)
 {
-    radius = ofRandom(10,30);
+    radius = ofRandom(15,30);
     
     born = ofGetElapsedTimef();
     pos.set(x,y);
@@ -36,13 +36,12 @@ void LeafNY::drawMe()
     //To draw the square leaves
     ofSetColor(color);
     
-    float angle = ofMap(radius, 10, 30, 0, 360);
+    float angle = ofMap(radius, 15, 30, 0, 360);
     //To let the leaves have rotation
     ofSetRectMode(OF_RECTMODE_CENTER);
     ofPushMatrix();
     ofTranslate(pos.x,pos.y);
     ofRotate(angle);
-    //ofRect(0,0, radius*energy, radius*energy);
     ofTriangle(0, radius*energy, 0.866*radius*energy, -0.5*radius*energy, -0.866*radius*energy, -0.5*radius*energy);
     ofPopMatrix();
     
