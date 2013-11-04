@@ -30,8 +30,9 @@ class testApp : public ofBaseApp{
     float timepercentSH, timepercentNY;
     int hourSH, minuteSH, secondSH,hourNY,minuteNY,secondNY;
     float angleSH,angleNY,r, sunSHx, sunSHy, sunNYx, sunNYy;
-    float energy,sunRadiusSH,sunRadiusNY;
+    float sunRadiusSH,sunRadiusNY,sunSHPrev,sunNYPrev;
     ofTrueTypeFont font;
+    ofColor color;
     
     Spacebrew::Connection spacebrew;
     void onMessage( Spacebrew::Message & msg );
