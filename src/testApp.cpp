@@ -60,7 +60,7 @@ void testApp::update(){
     lightNY = lightNY + line2;
  
     //To let the leaf grow when light colleted
-    if ( line1 > 650) {
+    if ( line1 > 600) {
         if( lightSH%300 > 295){
         //r = ofRandom(0,300);
         float a = ofRandom(0,300);
@@ -74,7 +74,7 @@ void testApp::update(){
         }
     }
     
-    if (line2 > 650) {
+    if (line2 > 600) {
         if(lightNY%300 > 295){
         //r = ofRandom(0,300);
         float a = ofRandom(0,260);
