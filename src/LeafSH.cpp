@@ -23,7 +23,7 @@ void LeafSH::updateMe()
 {
     //To let the leaf die out with time
     float age = ofGetElapsedTimef() - born;
-    color.a = ofMap(age,0,200,200,0);
+    color.a = ofMap(age,0,10,200,0);  //here change the speed of death
     //To let the leaf born with a speed
     energy = 0.9f * energy + 0.1f * 1.0f;
     

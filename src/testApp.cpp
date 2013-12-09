@@ -2,6 +2,13 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
+    // this is based in Golan Levin's example for Processing
+    cam.initGrabber(640, 480);
+    
+    thisFrame.allocate(640, 480, OF_IMAGE_COLOR);  //color
+    lastFrame.allocate(640, 480, OF_IMAGE_COLOR);
+    diffImage.allocate(640,480, OF_IMAGE_COLOR);
+
     ofSetFrameRate(60);
     ofSetVerticalSync(TRUE);
     ofEnableAlphaBlending();
@@ -17,25 +24,72 @@ void testApp::setup(){
     time = 0;
     
     //To set the first radius of the sun
-    sunRadiusNY=300;
-    sunRadiusSH=300;
+    sunRadiusNY=200;
+    sunRadiusSH=200;
     
-//To get in the light data from spacebrew
     lightSH = 0;
     lightNY = 0;
-    string host = "sandbox.spacebrew.cc"; // change to localhost to test Spacebrew local server
-    //string host = Spacebrew::SPACEBREW_CLOUD;
-    string name = "Solar Input";
-    string description = "It's an input!";
-    spacebrew.addSubscribe("line1", "range" );
-    spacebrew.addSubscribe("line2", "range" );
-    spacebrew.connect( host, name, description );
-    Spacebrew::addListener(this, spacebrew);
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+    //camera
+    cam.update();
+    
+    bIsFrameNew = cam.isFrameNew();
+    
+    if (bIsFrameNew) {
+        thisFrame.setFromPixels(cam.getPixels(), 640, 480, OF_IMAGE_COLOR);
+        
+        movementSum = 0;
+        
+        for (int i = 0; i < 480; i++) {
+            for (int j = 0; j < 640; j++) {
+                
+                ofColor currColor = thisFrame.getColor(j,i);
+                ofColor prevColor = lastFrame.getColor(j,i);
+                
+                //extract rgb components from current pixel
+                int currR = currColor.r;
+                int currG = currColor.g;
+                int currB = currColor.b;
+                
+                //extract rgb components from previous pixel
+                
+                int prevR = prevColor.r;
+                int prevG = prevColor.g;
+                int prevB = prevColor.b;
+                
+                //compute difference
+                int diffR = abs(currR - prevR);   //abs means positive number
+                int diffG = abs(currG - prevG);
+                int diffB = abs(currB - prevB);
+                
+                //add these difference to the running tally
+                movementSum += diffR + diffG +diffB;
+                
+                //render the difference image to the screen
+                ofColor diff = ofColor(diffR, diffG,diffB);
+                diffImage.setColor(j, i, diff);
+                
+                //save current frame to previous frame
+                lastFrame.setColor(j,i,currColor);
+                
+            }
+        }
+    }
+
+    //camera as light
+    if(movementSum > 5000000){
+        lightSH = movementSum;
+        lightNY = movementSum;
+
+        }else{
+        lightSH = 0;
+        lightNY = 0;
+    }
+
     //To get the different time from Shanghai and New York
     timeSH = (ofGetUnixTime()+28800)%86400; //to change it to Shanghai Time
     timeNY = (ofGetUnixTime()-18000)%86400;
@@ -55,13 +109,9 @@ void testApp::update(){
         }
     }
     
-    //To get the collected light data
-    lightSH = lightSH + line1;
-    lightNY = lightNY + line2;
- 
-    //To let the leaf grow when light colleted
-    if ( line1 > 600) {
-        if( lightSH%300 > 295){
+    
+    //To let the leaf grow
+    if( lightSH%300 > 5){   //here change the speed of the leaves growth
         //r = ofRandom(0,300);
         float a = ofRandom(0,300);
         float b = ofRandom(0,340);
@@ -72,10 +122,9 @@ void testApp::update(){
         l.initialize(x, y);
         leafSH.push_back(l);
         }
-    }
     
-    if (line2 > 600) {
-        if(lightNY%300 > 295){
+
+        if(lightNY%200 > 5){
         //r = ofRandom(0,300);
         float a = ofRandom(0,260);
         float b = ofRandom(0,300);
@@ -86,7 +135,6 @@ void testApp::update(){
         l.initialize(x, y);
         leafNY.push_back(l);
         }
-    }
     
     //To help the sun rotate
     time = time +1;
@@ -94,20 +142,13 @@ void testApp::update(){
     //To help the sun change its radius according to the current light smoothly
     sunSHPrev = sunRadiusSH;
     sunNYPrev = sunRadiusNY;
-    sunRadiusSH = ofMap(line1, 300, 1000, 100, 200);
-    sunRadiusNY = ofMap(line2, 300, 1000, 100, 200);
     
-
+//    sunRadiusSH = ofMap(line1, 300, 1000, 100, 200);
+//    sunRadiusNY = ofMap(line2, 300, 1000, 100, 200);
+    sunRadiusSH = 200;
+    sunRadiusNY = 200;
+    
 }
-//---------------------------
-void testApp::onMessage( Spacebrew::Message & msg ){
-    if ( msg.name == "line1"){
-        line1 = msg.valueRange();
-    }else if ( msg.name == "line2"){
-        line2 = msg.valueRange();
-    }
-}
-
 //--------------------------------------------------------------
 void testApp::draw(){
     //To draw some of the branches behind the leaves
@@ -150,8 +191,8 @@ void testApp::draw(){
     ofSetColor(color);
     font.drawString("SH time "+ofToString(hourSH)+":"+ofToString(minuteSH)+":"+ofToString(secondSH), 30,ofGetHeight()-20);
     font.drawString("NY time "+ofToString(hourNY)+":"+ofToString(minuteSH)+":"+ofToString(secondSH), ofGetWidth()-270,ofGetHeight()-20);
-    font.drawString("SH light "+ofToString(line1), 30,40);
-    font.drawString("NY light "+ofToString(line2), ofGetWidth()-215,40);
+    font.drawString("SH light "+ofToString(lightSH), 30,40);
+    font.drawString("NY light "+ofToString(lightNY), ofGetWidth()-215,40);
     
     //To draw the leaves
     for (int i = 0; i<leafSH.size(); i++) {
@@ -166,6 +207,7 @@ void testApp::draw(){
     ofSetRectMode(OF_RECTMODE_CORNER);
     ofSetColor(255);
     branch.draw(0,0,ofGetWidth(),ofGetHeight());
+    
 
 }
 

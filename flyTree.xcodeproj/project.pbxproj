@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		606916101855F25000C3A337 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6069160F1855F25000C3A337 /* Particle.cpp */; };
 		606FEFE418278DF00019B307 /* LeafSH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 606FEFE218278DF00019B307 /* LeafSH.cpp */; };
 		606FEFE718278E950019B307 /* LeafNY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 606FEFE518278E950019B307 /* LeafNY.cpp */; };
 		6D73A566CFEC0B462FE6E43C /* Reactor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2232A9453E355593EF36ADA7 /* Reactor.cpp */; };
@@ -74,6 +75,8 @@
 		34A70E2C091020EE93F6B1CE /* Events.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Events.cpp; path = ../../../addons/ofxLibwebsockets/libs/ofxLibwebsockets/src/Events.cpp; sourceTree = SOURCE_ROOT; };
 		57EEFEC8B85F7C3B15DD45A4 /* Protocol.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Protocol.cpp; path = ../../../addons/ofxLibwebsockets/libs/ofxLibwebsockets/src/Protocol.cpp; sourceTree = SOURCE_ROOT; };
 		5D95092D59E7A34C9DB7823E /* Server.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Server.cpp; path = ../../../addons/ofxLibwebsockets/libs/ofxLibwebsockets/src/Server.cpp; sourceTree = SOURCE_ROOT; };
+		6069160F1855F25000C3A337 /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
+		606916111855F25A00C3A337 /* Particle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		606FEFE218278DF00019B307 /* LeafSH.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LeafSH.cpp; sourceTree = "<group>"; };
 		606FEFE318278DF00019B307 /* LeafSH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeafSH.h; sourceTree = "<group>"; };
 		606FEFE518278E950019B307 /* LeafNY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LeafNY.cpp; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				606FEFE318278DF00019B307 /* LeafSH.h */,
 				606FEFE518278E950019B307 /* LeafNY.cpp */,
 				606FEFE618278E950019B307 /* LeafNY.h */,
+				6069160F1855F25000C3A337 /* Particle.cpp */,
+				606916111855F25A00C3A337 /* Particle.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -379,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				606916101855F25000C3A337 /* Particle.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
 				606FEFE718278E950019B307 /* LeafNY.cpp in Sources */,

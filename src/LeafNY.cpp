@@ -24,7 +24,7 @@ void LeafNY::updateMe()
 {
     //To let the leaf die out with time
     float age = ofGetElapsedTimef() - born;
-    color.a = ofMap(age,0,200,200,0);
+    color.a = ofMap(age,0,5,200,0);
     //To let the leaf born with a speed
     energy = 0.9f * energy + 0.1f * 1.0f;
     

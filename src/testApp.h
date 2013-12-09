@@ -4,6 +4,7 @@
 #include"LeafSH.h"
 #include "LeafNY.h"
 #include "ofxSpacebrew.h"
+#include"Particle.h"
 
 class testApp : public ofBaseApp{
 
@@ -34,7 +35,13 @@ class testApp : public ofBaseApp{
     ofTrueTypeFont font;
     ofColor color;
     
-    Spacebrew::Connection spacebrew;
-    void onMessage( Spacebrew::Message & msg );
-    int line1,line2;
+    ofVideoGrabber cam;
+    bool bIsFrameNew;
+    ofPixels thisFrame;
+    ofPixels lastFrame;
+    ofPixels diffImage;
+    
+    int movementSum;
+    
+    
 };
